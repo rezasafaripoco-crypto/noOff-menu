@@ -278,17 +278,18 @@
     color:var(--cream);
   }
   .items li{
-    padding:6px 0;
+    padding:8px 0;
     border-bottom:1px dashed var(--divider);
-    display:flex; align-items:center; gap:8px;
+    display:flex; align-items:center; gap:10px;
   }
   .items li:last-child{ border-bottom:none; }
-  .items li::before{
-    content:"";
-    width:5px; height:5px; border-radius:50%;
-    background:var(--amber);
-    box-shadow:0 0 6px var(--amber-glow);
+  .item-thumb{
+    width:38px; height:38px;
+    border-radius:10px;
+    object-fit:cover;
     flex-shrink:0;
+    border:1px solid var(--metal-edge);
+    background:var(--metal);
   }
   .back-scroll{ overflow-y:auto; flex:1; padding-inline-end:4px; }
   .back-scroll::-webkit-scrollbar{ width:5px; }
@@ -350,6 +351,23 @@
     padding:10px 8px;
   }
 
+  .cat-cover{
+    width:100%;
+    height:110px;
+    object-fit:cover;
+    border-radius:12px;
+    border:1px solid var(--metal-edge);
+    margin-bottom:4px;
+  }
+  .master-icon.photo{
+    background:none; border:none; box-shadow:none;
+    width:84px; height:84px;
+  }
+  .master-icon.photo img{
+    width:100%; height:100%; object-fit:cover;
+    border-radius:50%; border:1px solid var(--metal-edge);
+  }
+
   footer{
     text-align:center;
     padding: 40px 20px 60px;
@@ -397,8 +415,8 @@
     <div class="card spotlight" id="sandwichCard">
       <div class="card-inner">
         <div class="face front">
-          <div class="master-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11h18l-1.2 3.2a2 2 0 0 1-1.9 1.3H6.1a2 2 0 0 1-1.9-1.3L3 11Z"/><path d="M4 11a8 8 0 0 1 16 0"/><path d="M2 11h20" stroke-linecap="round"/><path d="M6 17.5c.5 1 1.3 1.5 2 1.5h8c.7 0 1.5-.5 2-1.5"/></svg>
+          <div class="master-icon photo">
+            <img src="https://loremflickr.com/160/160/gourmet-sandwich?lock=999" alt="NO.OFF Sandwich" loading="lazy">
           </div>
           <div>
             <div class="spotlight-en">CH.07 · THE ONE</div>
@@ -438,43 +456,56 @@ const ICONS = {
   cake: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 21v-7a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v7"/><path d="M4 21h16M9 11V6M9 6c-1 0-1.5-.7-1.5-1.5S8 3 9 3s1.5.7 1.5 1.5S10 6 9 6Z"/><path d="M4 16h16"/></svg>'
 };
 
+function it(name, kw){ return { name:name, kw:kw }; }
+
 const DATA = {
   bar: [
-    { ch:'CH.01', icon:'cup', title:'بار گرم', en:'HOT BAR', subs:[
-        {label:'COFFEE', items:['اسپرسو','اسپرسو دبل','آمریکانو','کورتادو','کاپوچینو','لاته','فلت‌وایت','موکا','کارامل ماکیاتو','وانیل لاته']},
-        {label:'HOT', items:['هات چاکلت','وایت چاکلت','ماسالا لاته','ماچا لاته']}
+    { ch:'CH.01', icon:'cup', title:'بار گرم', en:'HOT BAR', cover:'espresso-coffee', subs:[
+        {label:'COFFEE', items:[it('اسپرسو','espresso-shot'),it('اسپرسو دبل','double-espresso'),it('آمریکانو','americano-coffee'),it('کورتادو','cortado-coffee'),it('کاپوچینو','cappuccino'),it('لاته','latte-art'),it('فلت‌وایت','flat-white-coffee'),it('موکا','mocha-coffee'),it('کارامل ماکیاتو','caramel-macchiato'),it('وانیل لاته','vanilla-latte')]},
+        {label:'HOT', items:[it('هات چاکلت','hot-chocolate'),it('وایت چاکلت','white-hot-chocolate'),it('ماسالا لاته','masala-chai'),it('ماچا لاته','matcha-latte')]}
       ]},
-    { ch:'CH.02', icon:'snow', title:'بار سرد', en:'COLD BAR', subs:[
-        {label:'ICED', items:['آیس آمریکانو','آیس لاته','آیس موکا','آیس کارامل ماکیاتو','آیس وانیل لاته','آیس فلت‌وایت','آیس ماچا لاته','کلد برو','آفوگاتو']}
+    { ch:'CH.02', icon:'snow', title:'بار سرد', en:'COLD BAR', cover:'iced-coffee', subs:[
+        {label:'ICED', items:[it('آیس آمریکانو','iced-americano'),it('آیس لاته','iced-latte'),it('آیس موکا','iced-mocha'),it('آیس کارامل ماکیاتو','iced-caramel-macchiato'),it('آیس وانیل لاته','iced-vanilla-latte'),it('آیس فلت‌وایت','iced-flat-white'),it('آیس ماچا لاته','iced-matcha-latte'),it('کلد برو','cold-brew-coffee'),it('آفوگاتو','affogato-dessert')]}
       ]}
   ],
   drinks: [
-    { ch:'CH.03', icon:'leaf', title:'چای و دمنوش', en:'TEA & HERBAL', subs:[
-        {label:'TEA', items:['چای سیاه','چای سبز','چای ترش','چای نعناع','چای ماسالا']},
-        {label:'HERBAL', items:['دمنوش آرامش','دمنوش انرژی','دمنوش زنجبیل و لیمو','دمنوش بهارنارنج','دمنوش مخصوص NO.OFF']}
+    { ch:'CH.03', icon:'leaf', title:'چای و دمنوش', en:'TEA & HERBAL', cover:'herbal-tea', subs:[
+        {label:'TEA', items:[it('چای سیاه','black-tea'),it('چای سبز','green-tea'),it('چای ترش','hibiscus-tea'),it('چای نعناع','mint-tea'),it('چای ماسالا','masala-chai-tea')]},
+        {label:'HERBAL', items:[it('دمنوش آرامش','chamomile-tea'),it('دمنوش انرژی','ginseng-tea'),it('دمنوش زنجبیل و لیمو','ginger-lemon-tea'),it('دمنوش بهارنارنج','orange-blossom-tea'),it('دمنوش مخصوص NO.OFF','herbal-tea-blend')]}
       ]},
-    { ch:'CH.04', icon:'glass', title:'موکتل', en:'NO.OFF SIGNATURE', subs:[
-        {label:'SIGNATURE', items:['Red Off','Green Off','Pink Off','Sun Off','Dark Off','NO.OFF Signature']}
+    { ch:'CH.04', icon:'glass', title:'موکتل', en:'NO.OFF SIGNATURE', cover:'colorful-mocktail', subs:[
+        {label:'SIGNATURE', items:[it('Red Off','red-mocktail'),it('Green Off','green-mocktail'),it('Pink Off','pink-mocktail'),it('Sun Off','orange-mocktail'),it('Dark Off','dark-cocktail'),it('NO.OFF Signature','signature-cocktail')]}
       ]},
-    { ch:'CH.05', icon:'glass', title:'نوشیدنی سرد', en:'COLD DRINKS', subs:[
-        {label:'FRESH', items:['آب پرتقال تازه','لیموناد کلاسیک','لیموناد نعناع','لیموناد توت‌فرنگی']},
-        {label:'SHAKE', items:['وانیل','شکلات','پسته','موز و بادام‌زمینی']},
-        {label:'SMOOTHIE', items:['توت‌فرنگی','انبه','بلوبری','موز و کره بادام‌زمینی']}
+    { ch:'CH.05', icon:'glass', title:'نوشیدنی سرد', en:'COLD DRINKS', cover:'fruit-smoothie', subs:[
+        {label:'FRESH', items:[it('آب پرتقال تازه','orange-juice'),it('لیموناد کلاسیک','lemonade'),it('لیموناد نعناع','mint-lemonade'),it('لیموناد توت‌فرنگی','strawberry-lemonade')]},
+        {label:'SHAKE', items:[it('وانیل','vanilla-milkshake'),it('شکلات','chocolate-milkshake'),it('پسته','pistachio-milkshake'),it('موز و بادام‌زمینی','banana-peanut-butter-milkshake')]},
+        {label:'SMOOTHIE', items:[it('توت‌فرنگی','strawberry-smoothie'),it('انبه','mango-smoothie'),it('بلوبری','blueberry-smoothie'),it('موز و کره بادام‌زمینی','banana-smoothie')]}
       ]}
   ],
   dessert: [
-    { ch:'CH.06', icon:'cake', title:'کیک و دسر', en:'CAKE & DESSERT', subs:[
-        {label:'CAKE', items:['چیزکیک نیویورکی','چیزکیک سن‌سباستین','کیک شکلاتی','کیک هویج و گردو','کیک روز']},
-        {label:'DESSERT', items:['تیرامیسو','براونی','براونی و بستنی','کروسان ساده','کروسان شکلاتی','کروسان بادام']}
+    { ch:'CH.06', icon:'cake', title:'کیک و دسر', en:'CAKE & DESSERT', cover:'cheesecake-slice', subs:[
+        {label:'CAKE', items:[it('چیزکیک نیویورکی','new-york-cheesecake'),it('چیزکیک سن‌سباستین','basque-burnt-cheesecake'),it('کیک شکلاتی','chocolate-cake'),it('کیک هویج و گردو','carrot-walnut-cake'),it('کیک روز','cake-slice')]},
+        {label:'DESSERT', items:[it('تیرامیسو','tiramisu-dessert'),it('براونی','chocolate-brownie'),it('براونی و بستنی','brownie-ice-cream'),it('کروسان ساده','plain-croissant'),it('کروسان شکلاتی','chocolate-croissant'),it('کروسان بادام','almond-croissant')]}
       ]}
   ]
 };
 
+function imgUrl(kw, seed){
+  return 'https://loremflickr.com/160/160/' + encodeURIComponent(kw) + '?lock=' + seed;
+}
+
+let seedCounter = 1;
+
 function buildCard(cat){
   const subsHtml = cat.subs.map(s => `
     <div class="sub-label">${s.label}</div>
-    <ul class="items">${s.items.map(i=>`<li>${i}</li>`).join('')}</ul>
+    <ul class="items">${s.items.map(i=>{
+      const url = imgUrl(i.kw, seedCounter++);
+      return `<li><img class="item-thumb" src="${url}" alt="${i.name}" loading="lazy">${i.name}</li>`;
+    }).join('')}</ul>
   `).join('');
+
+  const coverUrl = imgUrl(cat.cover, seedCounter++);
 
   return `
   <div class="card">
@@ -485,6 +516,7 @@ function buildCard(cat){
           <span class="icon">${ICONS[cat.icon]}</span>
         </div>
         <div class="card-mid">
+          <img class="cat-cover" src="${coverUrl}" alt="${cat.title}" loading="lazy">
           <h3 class="cat-title">${cat.title}<span class="en">${cat.en}</span></h3>
           <div class="switch"><div class="knob"></div></div>
         </div>
